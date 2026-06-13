@@ -92,7 +92,7 @@ img { max-width:100%; display:block; }
 section { padding:clamp(4.5rem,9vw,7.5rem) 0; }
 
 /* ════════════════════════════════════════════════
-   HEADER / NAVIGATION (المدمجة لمنع التداخل والاصطدام)
+   HEADER / NAVIGATION
 ════════════════════════════════════════════════ */
 header {
   position:fixed;
@@ -151,7 +151,6 @@ header {
 }
 .nav-links a:hover { color:var(--accent); }
 
-/* أزرار التحكم مدمجة لحماية مساحة الهيدر ومنع مشاكل التموضع المطلق */
 .nav-actions-group {
   display:flex;
   align-items:center;
@@ -237,10 +236,6 @@ header {
   border-radius:50%;
   background:radial-gradient(circle,rgba(250,204,21,.08) 0%,transparent 70%);
   animation:orb-breathe 6s ease-in-out infinite reverse;
-}
-@keyframes orb-breathe {
-  0%,100%{ transform:translate(-50%,-52%) scale(1); opacity:.85; }
-  50%{ transform:translate(-50%,-52%) scale(1.1); opacity:1; }
 }
 
 .hero-grid-tex {
@@ -433,7 +428,7 @@ h1.hero-title .hl { color:var(--accent); }
 }
 
 /* ════════════════════════════════════════════════
-   SECTION: PACKAGES
+   SECTION: PACKAGES (تم تعديل الشارة لتصبح عائمة ومطلقة الموضع)
 ════════════════════════════════════════════════ */
 #packages {
   background:var(--bg-surface);
@@ -460,20 +455,30 @@ h1.hero-title .hl { color:var(--accent); }
   flex-direction:column;
 }
 
+/* تعديل الشارة لتصبح مطلقة الموضع في الجانب المقابل لعدم دفع الإيموجي لأسفل */
 .pop-badge {
+  position:absolute;
+  top:20px;
+  left:20px; /* تظهر في الجانب الأيسر في العرض العربي */
+  z-index:10;
   display:inline-flex;
   align-items:center;
   gap:5px;
-  padding:4px 11px;
+  padding:5px 12px;
   background:var(--accent);
   color:#0a0f1d;
   font-size:.7rem;
   font-weight:800;
   border-radius:999px;
-  margin-bottom:.9rem;
   letter-spacing:.02em;
-  width:fit-content;
+  box-shadow:var(--glow-xs);
 }
+/* تكييف موضع الشارة لتنتقل لليمين تلقائياً عند تحويل الموقع للغة الإنجليزية */
+body[data-lang="en"] .pop-badge {
+  left:auto;
+  right:20px;
+}
+
 .pkg-emoji { font-size:2.4rem; margin-bottom:.85rem; display:block; }
 .pkg-name {
   font-size:clamp(1rem,2vw,1.17rem);
@@ -852,7 +857,7 @@ footer {
 }
 
 /* ════════════════════════════════════════════════
-   HIDDEN PDF INVOICE TEMPLATE (موضع خارج الشاشة بشكل دائم لمنع الوميض والتداخل)
+   HIDDEN PDF INVOICE TEMPLATE
 ════════════════════════════════════════════════ */
 #pdf-invoice-template {
   position: absolute;
@@ -954,6 +959,10 @@ footer {
   .hero-stats { gap:1.2rem; }
   .foot-inner { flex-direction:column; align-items:center; text-align:center; }
   .foot-tagline { text-align:center; }
+  
+  /* خفض مسافة التموضع للشارة العائمة قليلاً على الهواتف */
+  .pop-badge { top: 12px; left: 12px; padding: 4px 8px; font-size: 0.65rem; }
+  body[data-lang="en"] .pop-badge { left: auto; right: 12px; }
 }
 
 @media (prefers-reduced-motion:reduce) {
@@ -1097,12 +1106,12 @@ footer {
 
     <div class="pkg-grid">
 
-      <!-- CARD 1: Executive Check-up -->
+      <!-- CARD 1: Executive Check-up (الشارة هنا أصبحت عائمة بالكامل) -->
       <div class="glass pkg-card reveal">
         <div class="pop-badge">
           ⭐ <span class="ar">الأكثر طلباً</span><span class="en">Most Popular</span>
         </div>
-        <span class="pkg-emoji">🧑‍⚕️</span>
+        <span class="pkg-emoji">🩺</span>
         <div class="pkg-name ar">باقة الاطمئنان الشامل</div>
         <div class="pkg-name en">Executive Check-up</div>
         <div class="pkg-tagline ar">تغطية شاملة لأهم مؤشراتك الصحية للوقاية المبكرة</div>
@@ -1299,7 +1308,7 @@ footer {
         <div class="warn-box">
           <span class="warn-ico">⚠️</span>
           <div>
-            <p class="warn-txt ar"><strong>تعليمات الصيام (للسكر الصائم فقط):</strong> صيام من 8 إلى 12 ساعت. الماء الطبيعي مسموح. أما <strong>السكر التراكمي (HbA1c)</strong> فلا يحتاج صياماً على الإطلاق.</p>
+            <p class="warn-txt ar"><strong>تعليمات الصيام (للسكر الصائم فقط):</strong> صيام من 8 إلى 12 ساعة. الماء الطبيعي مسموح. أما <strong>السكر التراكمي (HbA1c)</strong> فلا يحتاج صياماً على الإطلاق.</p>
             <p class="warn-txt en"><strong>Fasting (FBS only):</strong> Fast 8–12 hours. Plain water permitted. <strong>HbA1c</strong> requires absolutely no fasting.</p>
           </div>
         </div>
@@ -1464,14 +1473,13 @@ footer {
 </section>
 
 <!-- ════════════════════════════════════════════
-     PARTNERS MARQUEE (always LTR)
+     PARTNERS MARQUEE
 ════════════════════════════════════════════ -->
 <div class="marquee-section">
   <p class="marquee-lbl ar">شركاؤنا وجهات الاعتماد</p>
   <p class="marquee-lbl en">Partners & Accreditation Bodies</p>
   <div class="marquee-wrap">
     <div class="marquee-track">
-      <!-- Set A -->
       <div class="m-item"><span class="m-ico">🛡️</span>AXA INSURANCE</div>
       <div class="m-dot"></div>
       <div class="m-item"><span class="m-ico">🏦</span>METLIFE</div>
@@ -1488,7 +1496,7 @@ footer {
       <div class="m-dot"></div>
       <div class="m-item"><span class="m-ico">🔬</span>CLIA CERTIFIED</div>
       <div class="m-dot"></div>
-      <!-- Set B -->
+      <!-- النسخة المكررة -->
       <div class="m-item"><span class="m-ico">🛡️</span>AXA INSURANCE</div>
       <div class="m-dot"></div>
       <div class="m-item"><span class="m-ico">🏦</span>METLIFE</div>
@@ -1533,7 +1541,7 @@ footer {
 </footer>
 
 <!-- ════════════════════════════════════════════
-     HIDDEN PDF INVOICE TEMPLATE (موضع خارج حدود الشاشة نهائياً لمنع أي وميض أو ظهور مفاجئ)
+     HIDDEN PDF INVOICE TEMPLATE
 ════════════════════════════════════════════ -->
 <div id="pdf-invoice-template">
   <div class="pdf-head">
@@ -1710,7 +1718,7 @@ function scrollToForm() {
 }
 
 /* ══════════════════════════════════════════════
-   PDF GENERATOR (تم التعديل ليتم السحب التلقائي تماماً بدون أي ظهور أو وميض)
+   PDF GENERATOR
 ══════════════════════════════════════════════ */
 document.getElementById('pdf-btn').addEventListener('click', () => {
   const now    = new Date();
@@ -1734,7 +1742,6 @@ document.getElementById('pdf-btn').addEventListener('click', () => {
      تحتفظ إدارة نور لاب بحق تعديل الأسعار المخبرية دون إشعار مسبق تبعاً للمستجدات الطبية. للتحقق يُرجى التواصل معنا مباشرةً.<br>
      NoorLab reserves the right to modify clinical prices without prior notice. For continuous verification, please contact us directly.`;
 
-  // نأخذ القالب وهو مستقر في مكانه المحلي المخفي تماماً خارج إطار العرض
   const template = document.getElementById('pdf-invoice-template');
 
   const opts = {
@@ -1745,7 +1752,6 @@ document.getElementById('pdf-btn').addEventListener('click', () => {
     jsPDF:      { unit: 'mm', format: 'a4', orientation: 'portrait' }
   };
 
-  // يتم توليد وحفظ المستند مباشرة في الخلفية وبشكل صامت بدون تفعيل لخاصية block
   html2pdf().set(opts).from(template).save();
 });
 
