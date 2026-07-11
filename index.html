@@ -194,7 +194,7 @@ header {
 }
 
 /* ════════════════════════════════════════════════
-   HERO SECTION (تحديث شامل ليصبح الفيديو هو الخلفية الوحيدة)
+   HERO SECTION
 ════════════════════════════════════════════════ */
 #hero {
   position: relative;
@@ -214,7 +214,6 @@ header {
   align-items: center;
 }
 
-/* الفيديو كخلفية أساسية مستبدلة بالكامل بالقديمة */
 #scroll-video {
   position: absolute;
   top: 0;
@@ -224,18 +223,18 @@ header {
   object-fit: cover;
   z-index: 0;
   pointer-events: none;
-  opacity: 1; /* ظهور كامل للفيديو الأصلي */
+  opacity: 1;
 }
 
-/* طبقة معتمة ناعمة فوق الفيديو للحفاظ على وضوح التكست العالي */
+/* تم إصلاح الـ 100% هنا ليعمل الجريدينت بشكل سليم */
 .hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(10, 15, 29, 0.5) 0%,
+    rgba(10, 15, 29, 0.4) 0%,
     rgba(10, 15, 29, 0.6) 70%,
-    var(--bg-surface) 100__
+    var(--bg-surface) 100%
   );
   z-index: 1;
   pointer-events: none;
@@ -243,7 +242,7 @@ header {
 
 .hero-content {
   position:relative;
-  z-index: 3; /* أعلى من الفيديو والأوفرلاي */
+  z-index: 3;
   text-align:center;
   max-width:820px;
   margin:0 auto;
@@ -945,9 +944,6 @@ footer {
   .hero-stats { gap:1.2rem; }
   .foot-inner { flex-direction:column; align-items:center; text-align:center; }
   .foot-tagline { text-align:center; }
-  
-  .pop-badge { top: 12px; left: 12px; padding: 4px 8px; font-size: 0.65rem; }
-  body[data-lang="en"] .pop-badge { left: auto; right: 12px; }
 }
 
 @media (prefers-reduced-motion:reduce) {
@@ -1005,7 +1001,6 @@ footer {
 ════════════════════════════════════════════ -->
 <section id="hero">
   <div class="hero-sticky-container">
-    <!-- خلفية الفيديو التفاعلية الصافية -->
     <video id="scroll-video" src="microscope-scroll.mp4" preload="auto" muted playsinline></video>
     <div class="hero-overlay"></div>
     
@@ -1706,18 +1701,25 @@ function scrollToForm() {
 }
 
 /* ══════════════════════════════════════════════
-   VIDEO SCROLL CONTROL (Scrollytelling Logic)
+   VIDEO SCROLL CONTROL & TESTING
 ══════════════════════════════════════════════ */
 const heroSection = document.getElementById('hero');
 const scrollVideo = document.getElementById('scroll-video');
 const heroContent = document.querySelector('.hero-content');
 
-// خدعة برمجية لإجبار المتصفح على تحميل الفريمات مسبقاً وتخطي حماية ملفات الكمبيوتر المحلية
+// كاشف أخطاء التحميل لمساعدتك في المعاينة الفورية برمجياً
+scrollVideo.addEventListener('error', () => {
+  console.error("❌ خطأ في تحميل الفيديو! تأكد أن الملف في نفس المجلد وباسم دقيق: microscope-scroll.mp4");
+  alert("تنبيه برميجي: لم يتم العثور على الفيديو. تأكد من صحة مساره الفعلي وجودته داخل المجلد.");
+});
+
+// تجربة الاستيقاظ والتشغيل الدافئ
 scrollVideo.load();
 scrollVideo.play().then(() => {
+  console.log("✅ كوديك الفيديو سليم وتم تحميله بنجاح.");
   scrollVideo.pause();
 }).catch(err => {
-  console.log("Warm-up player ready. Frame rendering active on scroll.");
+  console.warn("⚠️ تم رصد حظر أمني محلي للملف (بسبب تشغيله بروتوكول file:///). تأكد من تشغيل الموقع عبر سيرفر محلي (Live Server) ليعمل السكرول بنجاح.");
 });
 
 let tickingVideo = false;
@@ -1734,11 +1736,10 @@ function updateVideoOnScroll() {
   if (scrollFraction < 0) scrollFraction = 0;
   if (scrollFraction > 1) scrollFraction = 1;
 
-  // لو لسه مدة الفيديو مش مقروءة من الجهاز، بنحط قيمة افتراضية 4 ثواني لحين التحميل لمنع الـ NaN والتهنيج
+  // إعطاء قيمة افتراضية في حالة عدم اكتمال قراءة البيانات الوصفية محلياً
   const videoDuration = scrollVideo.duration || 4;
   scrollVideo.currentTime = scrollFraction * videoDuration;
 
-  // التلاشي التدريجي للمحتوى وأنت نازل
   if (heroContent) {
     heroContent.style.opacity = (1 - scrollFraction * 1.6).toString();
     if (scrollFraction > 0.65) {
