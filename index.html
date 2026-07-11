@@ -224,9 +224,11 @@ header {
   z-index: 0;
   pointer-events: none;
   opacity: 1;
+  
+  /* الحـل الأول السحـري: تكبير الفيديو بنسبة 5% لدفع وتخبئة العلامة المائية خارج حدود الشاشة */
+  transform: scale(1.05);
 }
 
-/* تم إصلاح الـ 100% هنا ليعمل الجريدينت بشكل سليم */
 .hero-overlay {
   position: absolute;
   inset: 0;
