@@ -194,15 +194,36 @@ header {
 }
 
 /* ════════════════════════════════════════════════
-   HERO SECTION
+   HERO SECTION (تعديل الهيكلية لدعم السكرول التفاعلي)
 ════════════════════════════════════════════════ */
 #hero {
-  position:relative;
-  min-height:100svh;
-  display:flex;
-  align-items:center;
-  padding-top:74px;
-  overflow:hidden;
+  position: relative;
+  height: 250vh; /* تحديد عمق السكرول الخاص بالفيديو */
+  padding: 0;
+  overflow: visible;
+}
+
+.hero-sticky-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* عنصر الفيديو الخلفية المربوط بالماوس */
+#scroll-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55; /* تعتيم خفيف لضمان قراءة نصوص الموقع بوضوح */
 }
 
 .noor-orb {
@@ -210,6 +231,7 @@ header {
   inset:0;
   pointer-events:none;
   overflow:hidden;
+  z-index: 1;
 }
 .noor-orb::before {
   content:'';
@@ -226,22 +248,12 @@ header {
     transparent 72%);
   animation:orb-breathe 6s ease-in-out infinite;
 }
-.noor-orb::after {
-  content:'';
-  position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-52%);
-  width:clamp(160px,28vw,360px);
-  height:clamp(160px,28vw,360px);
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(250,204,21,.08) 0%,transparent 70%);
-  animation:orb-breathe 6s ease-in-out infinite reverse;
-}
 
 .hero-grid-tex {
   position:absolute;
   inset:0;
   pointer-events:none;
+  z-index: 1;
   background-image:
     linear-gradient(rgba(250,204,21,.028) 1px, transparent 1px),
     linear-gradient(90deg, rgba(250,204,21,.028) 1px, transparent 1px);
@@ -250,22 +262,23 @@ header {
   -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 45%, rgba(0,0,0,.5) 0%, transparent 100%);
 }
 
-#hero::after {
+.hero-sticky-container::after {
   content:'';
   position:absolute;
   bottom:0;left:0;right:0;
   height:180px;
   background:linear-gradient(transparent, var(--bg-surface));
   pointer-events:none;
-  z-index:1;
+  z-index: 2;
 }
 
 .hero-content {
   position:relative;
-  z-index:2;
+  z-index:3;
   text-align:center;
   max-width:820px;
   margin:0 auto;
+  will-change: opacity;
 }
 
 .hero-badge {
@@ -428,11 +441,12 @@ h1.hero-title .hl { color:var(--accent); }
 }
 
 /* ════════════════════════════════════════════════
-   SECTION: PACKAGES (تم تعديل الشارة لتصبح عائمة ومطلقة الموضع)
+   SECTION: PACKAGES
 ════════════════════════════════════════════════ */
 #packages {
   background:var(--bg-surface);
   position:relative;
+  z-index: 10;
 }
 #packages::before, #packages::after {
   content:'';
@@ -455,11 +469,10 @@ h1.hero-title .hl { color:var(--accent); }
   flex-direction:column;
 }
 
-/* تعديل الشارة لتصبح مطلقة الموضع في الجانب المقابل لعدم دفع الإيموجي لأسفل */
 .pop-badge {
   position:absolute;
   top:20px;
-  left:20px; /* تظهر في الجانب الأيسر في العرض العربي */
+  left:20px;
   z-index:10;
   display:inline-flex;
   align-items:center;
@@ -473,7 +486,6 @@ h1.hero-title .hl { color:var(--accent); }
   letter-spacing:.02em;
   box-shadow:var(--glow-xs);
 }
-/* تكييف موضع الشارة لتنتقل لليمين تلقائياً عند تحويل الموقع للغة الإنجليزية */
 body[data-lang="en"] .pop-badge {
   left:auto;
   right:20px;
@@ -483,7 +495,7 @@ body[data-lang="en"] .pop-badge {
 .pkg-name {
   font-size:clamp(1rem,2vw,1.17rem);
   font-weight:700;
-  color:var(--white);
+  color:var(--text-hi);
   margin-bottom:.35rem;
 }
 .pkg-tagline {
@@ -553,7 +565,7 @@ body[data-lang="en"] .pop-badge {
 /* ════════════════════════════════════════════════
    SECTION: TESTS DIRECTORY
 ════════════════════════════════════════════════ */
-#tests { background:var(--bg-deep); }
+#tests { background:var(--bg-deep); position: relative; z-index: 10; }
 
 .tests-grid {
   display:grid;
@@ -628,6 +640,7 @@ body[data-lang="en"] .pop-badge {
 #home-visit {
   background:var(--bg-surface);
   position:relative;
+  z-index: 10;
 }
 #home-visit::before {
   content:'';
@@ -764,6 +777,8 @@ body[data-lang="en"] .pop-badge {
   border-top:1px solid var(--border);
   border-bottom:1px solid var(--border);
   overflow:hidden;
+  position: relative;
+  z-index: 10;
 }
 .marquee-lbl {
   text-align:center;
@@ -832,6 +847,8 @@ footer {
   padding:2.2rem 0;
   background:var(--bg-surface);
   border-top:1px solid var(--border);
+  position: relative;
+  z-index: 10;
 }
 .foot-inner {
   display:flex;
@@ -941,7 +958,7 @@ footer {
 }
 
 /* ════════════════════════════════════════════════
-   RESPONSIVE DESIGN (مطور لهواتف آيفون وسامسونج)
+   RESPONSIVE DESIGN
 ════════════════════════════════════════════════ */
 @media (max-width:860px) {
   .nav-links { display:none; }
@@ -960,7 +977,6 @@ footer {
   .foot-inner { flex-direction:column; align-items:center; text-align:center; }
   .foot-tagline { text-align:center; }
   
-  /* خفض مسافة التموضع للشارة العائمة قليلاً على الهواتف */
   .pop-badge { top: 12px; left: 12px; padding: 4px 8px; font-size: 0.65rem; }
   body[data-lang="en"] .pop-badge { left: auto; right: 12px; }
 }
@@ -1020,71 +1036,77 @@ footer {
      HERO SECTION
 ════════════════════════════════════════════ -->
 <section id="hero">
-  <div class="noor-orb"></div>
-  <div class="hero-grid-tex"></div>
-  <div class="container">
-    <div class="hero-content">
+  <div class="hero-sticky-container">
+    <!-- إدخال الفيديو المعدل كخلفية تفاعلية -->
+    <video id="scroll-video" src="microscope-scroll.mp4" preload="auto" muted playsinline></video>
+    
+    <div class="noor-orb"></div>
+    <div class="hero-grid-tex"></div>
+    
+    <div class="container">
+      <div class="hero-content">
 
-      <div class="hero-badge reveal">
-        <span>🏅</span>
-        <span class="ar">معتمد من وزارة الصحة المصرية</span>
-        <span class="en">Certified by Egypt Ministry of Health</span>
+        <div class="hero-badge reveal">
+          <span>🏅</span>
+          <span class="ar">معتمد من وزارة الصحة المصرية</span>
+          <span class="en">Certified by Egypt Ministry of Health</span>
+        </div>
+
+        <h1 class="hero-title reveal d1">
+          <span class="ar">مختبرك الطبي<br><span class="hl">الذكي</span> يأتي إليك</span>
+          <span class="en">Your Smart Medical Lab<br><span class="hl">Comes To You</span></span>
+        </h1>
+
+        <p class="hero-sub reveal d2">
+          <span class="ar">نتائج دقيقة، معتمدة، وفي وقتها — كل ذلك من راحة منزلك. احجز الآن وسيصلك فريقنا المتخصص.</span>
+          <span class="en">Accurate, certified results on your schedule — from the comfort of home. Book now and our team comes to you.</span>
+        </p>
+
+        <div class="cta-group reveal d3">
+          <a href="#home-visit" class="btn-prime">
+            <span>🏠</span>
+            <span class="ar">احجز زيارة منزلية</span>
+            <span class="en">Book a Home Visit</span>
+          </a>
+          <a href="#packages" class="btn-ghost">
+            <span class="ar">استكشف الباقات</span>
+            <span class="en">Explore Packages</span>
+            <span>↓</span>
+          </a>
+        </div>
+
+        <div class="hero-stats reveal d4">
+          <div class="h-stat">
+            <span class="num">+50,000</span>
+            <span class="lbl ar">عينة تم تحليلها</span>
+            <span class="lbl en">Samples Analyzed</span>
+          </div>
+          <div class="h-divider"></div>
+          <div class="h-stat">
+            <span class="num">24h</span>
+            <span class="lbl ar">وقت التسليم</span>
+            <span class="lbl en">Result Turnaround</span>
+          </div>
+          <div class="h-divider"></div>
+          <div class="h-stat">
+            <span class="num">100%</span>
+            <span class="lbl ar">سحب عينات مجاني</span>
+            <span class="lbl en">Free Home Extraction</span>
+          </div>
+          <div class="h-divider"></div>
+          <div class="h-stat">
+            <span class="num">99.8%</span>
+            <span class="lbl ar">دقة في النتائج</span>
+            <span class="lbl en">Result Accuracy</span>
+          </div>
+        </div>
+
       </div>
-
-      <h1 class="hero-title reveal d1">
-        <span class="ar">مختبرك الطبي<br><span class="hl">الذكي</span> يأتي إليك</span>
-        <span class="en">Your Smart Medical Lab<br><span class="hl">Comes To You</span></span>
-      </h1>
-
-      <p class="hero-sub reveal d2">
-        <span class="ar">نتائج دقيقة، معتمدة، وفي وقتها — كل ذلك من راحة منزلك. احجز الآن وسيصلك فريقنا المتخصص.</span>
-        <span class="en">Accurate, certified results on your schedule — from the comfort of home. Book now and our team comes to you.</span>
-      </p>
-
-      <div class="cta-group reveal d3">
-        <a href="#home-visit" class="btn-prime">
-          <span>🏠</span>
-          <span class="ar">احجز زيارة منزلية</span>
-          <span class="en">Book a Home Visit</span>
-        </a>
-        <a href="#packages" class="btn-ghost">
-          <span class="ar">استكشف الباقات</span>
-          <span class="en">Explore Packages</span>
-          <span>↓</span>
-        </a>
-      </div>
-
-      <div class="hero-stats reveal d4">
-        <div class="h-stat">
-          <span class="num">+50,000</span>
-          <span class="lbl ar">عينة تم تحليلها</span>
-          <span class="lbl en">Samples Analyzed</span>
-        </div>
-        <div class="h-divider"></div>
-        <div class="h-stat">
-          <span class="num">24h</span>
-          <span class="lbl ar">وقت التسليم</span>
-          <span class="lbl en">Result Turnaround</span>
-        </div>
-        <div class="h-divider"></div>
-        <div class="h-stat">
-          <span class="num">100%</span>
-          <span class="lbl ar">سحب عينات مجاني</span>
-          <span class="lbl en">Free Home Extraction</span>
-        </div>
-        <div class="h-divider"></div>
-        <div class="h-stat">
-          <span class="num">99.8%</span>
-          <span class="lbl ar">دقة في النتائج</span>
-          <span class="lbl en">Result Accuracy</span>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- ===================================================
+<!-- ════════════════════════════════════════════
      PACKAGES SECTION
 ════════════════════════════════════════════ -->
 <section id="packages">
@@ -1106,7 +1128,7 @@ footer {
 
     <div class="pkg-grid">
 
-      <!-- CARD 1: Executive Check-up (الشارة هنا أصبحت عائمة بالكامل) -->
+      <!-- CARD 1: Executive Check-up -->
       <div class="glass pkg-card reveal">
         <div class="pop-badge">
           ⭐ <span class="ar">الأكثر طلباً</span><span class="en">Most Popular</span>
@@ -1118,7 +1140,7 @@ footer {
         <div class="pkg-tagline en">Complete coverage of your key health indicators for early prevention</div>
         
         <div class="pkg-price-notice">
-          <span class="ar">الأسعار متوفرة في ملف PDF المعتمد 📄</span>
+          <span class="ar">الأسعار متوفرة in ملف PDF المعتمد 📄</span>
           <span class="en">Pricing available in the verified PDF 📄</span>
         </div>
 
@@ -1716,6 +1738,62 @@ function scrollToForm() {
   document.getElementById('home-visit').scrollIntoView({ behavior: 'smooth' });
   setTimeout(() => document.getElementById('f-name').focus(), 600);
 }
+
+/* ══════════════════════════════════════════════
+   VIDEO SCROLL CONTROL (Scrollytelling Logic)
+══════════════════════════════════════════════ */
+const heroSection = document.getElementById('hero');
+const scrollVideo = document.getElementById('scroll-video');
+const heroContent = document.querySelector('.hero-content');
+
+// تعيين أول فريم عند جاهزية الفيديو
+scrollVideo.addEventListener('loadedmetadata', () => {
+  scrollVideo.currentTime = 0;
+});
+
+let tickingVideo = false;
+
+function updateVideoOnScroll() {
+  const scrollTop = window.scrollY;
+  const heroHeight = heroSection.scrollHeight;
+  const windowHeight = window.innerHeight;
+  
+  // المسافة المتاحة للسكرول داخل منطقة الهيرو
+  const maxHeroScroll = heroHeight - windowHeight;
+  
+  if (maxHeroScroll <= 0) return;
+
+  // حساب النسبة الحالية من 0 إلى 1
+  let scrollFraction = scrollTop / maxHeroScroll;
+  if (scrollFraction < 0) scrollFraction = 0;
+  if (scrollFraction > 1) scrollFraction = 1;
+
+  // تحديث وقت الفيديو بناءً على السكرول
+  if (scrollVideo.duration) {
+    scrollVideo.currentTime = scrollFraction * scrollVideo.duration;
+  }
+
+  // تأثير التلاشي التدريجي للنصوص لعدم التداخل مع حركة الفيديو السينمائية
+  if (heroContent) {
+    heroContent.style.opacity = (1 - scrollFraction * 1.6).toString();
+    // تجميد العناصر كلياً لمنع حجب الضغطات بمجرد اختفائها
+    if (scrollFraction > 0.65) {
+      heroContent.style.pointerEvents = 'none';
+    } else {
+      heroContent.style.pointerEvents = 'auto';
+    }
+  }
+}
+
+window.addEventListener('scroll', () => {
+  if (!tickingVideo) {
+    window.requestAnimationFrame(() => {
+      updateVideoOnScroll();
+      tickingVideo = false;
+    });
+    tickingVideo = true;
+  }
+});
 
 /* ══════════════════════════════════════════════
    PDF GENERATOR
