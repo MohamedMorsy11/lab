@@ -197,7 +197,7 @@ header {
 ════════════════════════════════════════════════ */
 #hero {
   position: relative;
-  height: 220vh; /* تحديد عمق سكرول متزن ومريح للموبايل واللاب توب */
+  height: 220vh; /* مسافة سكرول انسيابية ومريحة */
   padding: 0;
   overflow: visible;
   background: var(--bg-deep);
@@ -206,7 +206,7 @@ header {
 .hero-sticky-container {
   position: sticky;
   top: 0;
-  height: 100dvh; /* dvh تضمن ثبات الخلفية تماماً عند اختفاء شريط المتصفح عل الموبايل */
+  height: 100dvh;
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -223,7 +223,12 @@ header {
   z-index: 0;
   pointer-events: none;
   opacity: 1;
-  transform: scale(1.05); /* إخفاء الووترمارك خارج حدود الشاشة */
+  
+  /* تفعيل كارت الشاشة بالقوة وتكبير خفيف لإخفاء الووترمارك */
+  transform: scale(1.05) translateZ(0);
+  -webkit-transform: scale(1.05) translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .hero-overlay {
@@ -307,24 +312,6 @@ h1.hero-title .hl { color:var(--accent); }
   background:var(--accent-dark);
   transform:translateY(-2px);
   box-shadow:var(--glow-md);
-}
-.btn-ghost {
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:clamp(12px,2vw,15px) clamp(22px,4vw,34px);
-  background:transparent;
-  color:var(--text-hi);
-  font-size:clamp(.88rem,1.6vw,.98rem);
-  font-weight:600;
-  border-radius:999px;
-  border:1px solid rgba(241,245,249,.18);
-  transition:var(--ease);
-}
-.btn-ghost:hover {
-  border-color:var(--accent);
-  color:var(--accent);
-  transform:translateY(-2px);
 }
 
 .hero-stats {
@@ -428,33 +415,6 @@ h1.hero-title .hl { color:var(--accent); }
   text-align:center;
 }
 
-.pkg-tests {
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-  margin-bottom:1.8rem;
-  flex-grow:1;
-}
-.pkg-tests li {
-  display:flex;
-  align-items:flex-start;
-  gap:8px;
-  font-size:clamp(.75rem,1.4vw,.82rem);
-  color:var(--text-md);
-}
-.pkg-tests li::before {
-  content:'✓';
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:17px; height:17px; min-width:17px;
-  background:rgba(250,204,21,.1);
-  color:var(--accent);
-  border-radius:50%;
-  font-size:.6rem;
-  font-weight:800;
-  margin-top:2px;
-}
 .pkg-btn {
   width:100%;
   padding:12px;
@@ -473,7 +433,6 @@ h1.hero-title .hl { color:var(--accent); }
   box-shadow:var(--glow-sm);
 }
 
-/* [بقية أكواد CSS القديمة للفحوصات والـ PDF والفوتير مدمجة ومحفوظة تماماً] */
 #tests { background:var(--bg-deep); position: relative; z-index: 10; }
 .tests-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:clamp(.9rem,2.5vw,1.4rem); }
 .test-card { padding:clamp(1.4rem,3vw,1.9rem); display:flex; flex-direction:column; }
@@ -481,19 +440,16 @@ h1.hero-title .hl { color:var(--accent); }
 .test-name { font-size:clamp(.98rem,1.9vw,1.12rem); font-weight:700; color:var(--text-hi); margin-bottom:.2rem; }
 .test-sub { font-size:clamp(.73rem,1.3vw,.7rem); color:var(--accent); font-weight:600; margin-bottom:.9rem; }
 .test-desc { font-size:clamp(.78rem,1.4vw,.85rem); color:var(--text-md); line-height:1.78; margin-bottom:1rem; }
-.sym-label { font-size:.7rem; font-weight:700; text-transform:uppercase; color:var(--text-lo); margin-bottom:.45rem; }
 .sym-tags { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:1.5rem; }
 .sym-tag { padding:3px 10px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:999px; font-size:.72rem; color:var(--text-md); }
 .warn-box { display:flex; gap:9px; padding:11px 13px; background:rgba(250,204,21,.07); border:1px solid rgba(250,204,21,.22); border-radius:var(--r-sm); margin-top:auto; }
 .warn-ico { font-size:.95rem; flex-shrink:0; margin-top:1px; }
 .warn-txt { font-size:clamp(.72rem,1.35vw,.79rem); color:rgba(251,191,36,.92); line-height:1.68; font-weight:500; }
-.warn-txt strong { font-weight:800; }
 
 #home-visit { background:var(--bg-surface); position:relative; z-index: 10; }
 #home-visit::before { content:''; position:absolute; top:0;left:0;right:0;height:1px; background:linear-gradient(90deg,transparent,var(--border-hi),transparent); }
 .visit-split { display:grid; grid-template-columns:1fr 1fr; gap:clamp(2.2rem,6vw,4.5rem); align-items:start; }
 .visit-benefits { display:flex; flex-direction:column; gap:1.4rem; }
-.visit-header { margin-bottom:.2rem; }
 .ben-item { display:flex; align-items:flex-start; gap:14px; }
 .ben-icon { width:46px; height:46px; min-width:46px; background:rgba(250,204,21,.07); border:1px solid var(--border); border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
 .ben-body h4 { font-size:clamp(.88rem,1.7vw,.98rem); font-weight:700; color:var(--text-hi); margin-bottom:3px; }
@@ -552,7 +508,8 @@ footer { padding:2.2rem 0; background:var(--bg-surface); border-top:1px solid va
 
 <section id="hero">
   <div class="hero-sticky-container">
-    <video id="scroll-video" src="microscope-scroll.mp4" preload="auto" muted playsinline></video>
+    <!-- أضفنا خاصية autoplay مجبرة للاستيقاظ الأولي التلقائي على الآيفون والكروم -->
+    <video id="scroll-video" src="microscope-scroll.mp4" autoplay loop muted playsinline style="pointer-events: none;"></video>
     <div class="hero-overlay"></div>
     
     <div class="container">
@@ -576,7 +533,6 @@ footer { padding:2.2rem 0; background:var(--bg-surface); border-top:1px solid va
   </div>
 </section>
 
-<!-- [أكواد الـ HTML المتبقية للباقات، الفحوصات، والفوتير محفوظة تماماً كما هي] -->
 <section id="packages">
   <div class="container">
     <div class="pkg-grid">
@@ -597,73 +553,58 @@ footer { padding:2.2rem 0; background:var(--bg-surface); border-top:1px solid va
 
 <script>
 /* ══════════════════════════════════════════════
-   المحرك المطور المحمي (SAFE SCROLL ENGINE)
+   محرك السكرول الانسيابي الصافي (CLEAN ENGINE)
 ══════════════════════════════════════════════ */
 const heroSection = document.getElementById('hero');
 const scrollVideo = document.getElementById('scroll-video');
 const heroContent = document.querySelector('.hero-content');
 
-let targetTime = 0;
-let actualTime = 0;
-const easeFactor = 0.15; // سرعة التتبع والانزلاق الناعم
-let isLooping = false;
+let targetProgress = 0;
+let currentProgress = 0;
 
-// دالة فحص وحقن الفريمات المحمية تماماً من التهنيج (Seeking Guard)
-function secureRenderLoop() {
-  let diff = targetTime - actualTime;
+// خدعة الاستيقاظ: نجعل الفيديو يشتغل تلقائياً لـ 50 مللي ثانية ثم نوقفه لتهيئة الـ Buffer
+scrollVideo.addEventListener('playing', () => {
+  setTimeout(() => {
+    scrollVideo.pause();
+    console.log("🚀 تم فك كوديك الفيديو وتهيئة المحرك بنجاح.");
+  }, 50);
+}, { once: true });
 
-  if (Math.abs(diff) > 0.01) {
-    actualTime += diff * easeFactor;
-
-    // السر السحري: لا تقم بتحديث الوقت نهائياً إذا كان المعالج يفك تشفير الفريم السابق (readyState >= 2 و !seeking)
-    if (scrollVideo.readyState >= 2 && !scrollVideo.seeking) {
-      scrollVideo.currentTime = actualTime;
-    }
-    requestAnimationFrame(secureRenderLoop);
-  } else {
-    // إيقاف اللوب عند الثبات التام لتوفير طاقة الجهاز
-    if (scrollVideo.readyState >= 2 && !scrollVideo.seeking) {
-      scrollVideo.currentTime = targetTime;
-    }
-    isLooping = false; 
-  }
-}
-
-// دالة الاستماع لحركة الماوس وصبع اليد (Passive Scroll Listener)
-function handleSafeScroll() {
+// حساب مسافة صباعك أو بكرة الماوس بدقة وبدون شروط تجميد
+window.addEventListener('scroll', () => {
   const scrollTop = window.scrollY;
   const maxHeroScroll = heroSection.scrollHeight - window.innerHeight;
   
   if (maxHeroScroll <= 0) return;
 
-  let scrollFraction = scrollTop / maxHeroScroll;
-  scrollFraction = Math.max(0, Math.min(1, scrollFraction)); // حصر النسبة بين 0 و 1
+  // نسبة السكرول من 0 إلى 1
+  targetProgress = Math.max(0, Math.min(1, scrollTop / maxHeroScroll));
 
-  const videoDuration = scrollVideo.duration || 4;
-  targetTime = scrollFraction * videoDuration;
-
-  // تلاشي النصوص تدريجياً مع السكرول
+  // تأثير تلاشي نصوص الهيرو
   if (heroContent) {
-    heroContent.style.opacity = (1 - scrollFraction * 1.6).toString();
-    heroContent.style.pointerEvents = scrollFraction > 0.65 ? 'none' : 'auto';
+    heroContent.style.opacity = (1 - targetProgress * 1.6).toString();
+    heroContent.style.pointerEvents = targetProgress > 0.65 ? 'none' : 'auto';
   }
+}, { passive: true });
 
-  // تشغيل المحرك فقط عند بدء الحركة
-  if (!isLooping) {
-    isLooping = true;
-    requestAnimationFrame(secureRenderLoop);
+// حلقة التحديث المستمر بـ Lerp ناعم وبدون فك شفرة ميت (No Deadlock)
+function smoothRenderLoop() {
+  // التزحلق الناعم نحو الهدف بنسبة 10% في كل فريم
+  currentProgress += (targetProgress - currentProgress) * 0.1;
+
+  // التأكد من تحميل الميديا وتفادي الـ NaN والتهنيج
+  if (scrollVideo.duration && !isNaN(scrollVideo.duration)) {
+    scrollVideo.currentTime = currentProgress * scrollVideo.duration;
   }
+  
+  requestAnimationFrame(smoothRenderLoop);
 }
 
-// ربط الحدث بشكل Passive لضمان أعلى أداء على شاشات الموبايل 120Hz
-window.addEventListener('scroll', handleSafeScroll, { passive: true });
-
-// تشغيل دافئ أولي لتجهيز كوديك المتصفح
-scrollVideo.load();
-scrollVideo.play().then(() => { scrollVideo.pause(); }).catch(e => console.log("Engine fully armed."));
+// إطلاق الحلقة الرسومية فوراً
+requestAnimationFrame(smoothRenderLoop);
 
 /* ══════════════════════════════════════════════
-   أكواد اللغة والـ PDF التقليدية
+   أكواد اللغة والـ الـ Reveal العادية
 ══════════════════════════════════════════════ */
 const body = document.body;
 const toggle = document.getElementById('lang-toggle');
